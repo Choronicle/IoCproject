@@ -1,5 +1,6 @@
 package com.example.xianyu.mapper;
 
+import com.example.xianyu.entity.CartItem;
 import com.example.xianyu.entity.Item;
 import org.apache.ibatis.annotations.*;
 
@@ -14,6 +15,9 @@ public interface CartMapper {
 
     @Select("select item_id from cart where user_id = #{user_id}")
     List<Integer> getCartItemByUserId(@Param("user_id") Integer user_id);
+
+    @Select("select * from cart where user_id = #{user_id} and item_id = #{item_id}")
+    CartItem getCartItemByUserIdAndItemId(@Param("user_id") Integer user_id, @Param("item_id") Integer item_id);
 
     @Delete("delete from cart where user_id = #{user_id} and item_id = #{item_id}")
     int deleteCart(@Param("user_id") Integer user_id, @Param("item_id") Integer item_id);

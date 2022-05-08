@@ -14,7 +14,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public boolean addCart(Integer user_id, Integer item_id) {
-        return cartMapper.addCart(user_id, item_id) > 0;
+        if(cartMapper.getCartItemByUserIdAndItemId(user_id, item_id) == null)return cartMapper.addCart(user_id, item_id) > 0;
+        return false;
     }
 
     @Override
