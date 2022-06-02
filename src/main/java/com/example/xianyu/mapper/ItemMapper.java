@@ -21,6 +21,9 @@ public interface ItemMapper {
     @Select("select * from item where iid = #{iid}")
     Item getItemByIid(@Param("iid") Integer iid);
 
+    @Select("select * from item where type_id = #{tid}")
+    List<Item> getItemByTid(@Param("tid") Integer tid);
+
     @Select("select * from item where item_status = 'forSale'")
     List<Item> getAllAvailableItem();
 }

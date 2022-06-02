@@ -1,9 +1,9 @@
-package com.example.xianyu.entity.DTO;
+package com.example.xianyu.entity.VO;
 
 import lombok.Data;
 
 @Data
-public class UserDto {
+public class UserVO {
     String user_input;
     String pass_input;
 }

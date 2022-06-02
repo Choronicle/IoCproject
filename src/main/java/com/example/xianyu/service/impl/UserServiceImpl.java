@@ -1,6 +1,6 @@
 package com.example.xianyu.service.impl;
 
-import com.example.xianyu.entity.DTO.UserDto;
+import com.example.xianyu.entity.VO.UserVO;
 import com.example.xianyu.entity.Item;
 import com.example.xianyu.entity.Sale;
 import com.example.xianyu.entity.User;
@@ -9,7 +9,6 @@ import com.example.xianyu.mapper.SaleMapper;
 import com.example.xianyu.mapper.UserMapper;
 import com.example.xianyu.service.UserService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -44,9 +43,9 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public User login(UserDto userDto){
-        User user = userMapper.getUserByUsername(userDto.getUser_input());
-        if(!user.getPassword().equals(userDto.getPass_input())){
+    public User login(UserVO userVO){
+        User user = userMapper.getUserByUsername(userVO.getUser_input());
+        if(!user.getPassword().equals(userVO.getPass_input())){
             user = null;
             return null;
         }

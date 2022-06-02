@@ -1,6 +1,6 @@
 package com.example.xianyu.controller;
 
-import com.example.xianyu.entity.DTO.UserDto;
+import com.example.xianyu.entity.VO.UserVO;
 import com.example.xianyu.entity.Item;
 import com.example.xianyu.entity.Sale;
 import com.example.xianyu.entity.User;
@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
@@ -23,13 +24,13 @@ public class UserController {
 
     //登录成功返回用户信息，登录失败则返回空
     @PostMapping("/login")
-    public User login(@RequestBody UserDto userDto, HttpServletRequest request) {
-        String username = userDto.getUser_input();
-        String password = userDto.getPass_input();
+    public User login(@RequestBody UserVO userVO, HttpServletRequest request) {
+        String username = userVO.getUser_input();
+        String password = userVO.getPass_input();
         if (username.isBlank() || password.isBlank()) {
             return null;
         }
-        User user =  userService.login(userDto);
+        User user =  userService.login(userVO);
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         return user;
@@ -46,7 +47,7 @@ public class UserController {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if(user == null) {
-            response.sendRedirect();//TODO:login页面跳转路径
+            response.sendRedirect("/login");//TODO:login页面跳转路径
             return null;
         }
         return userService.getBuyerSale(user.getUid());
@@ -57,7 +58,7 @@ public class UserController {
     HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if(user == null) {
-            response.sendRedirect();//TODO:login页面跳转路径
+            response.sendRedirect("/login");//TODO:login页面跳转路径
             return null;
         }
         return userService.getSalerSale(user.getUid());
@@ -68,7 +69,7 @@ public class UserController {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if(user == null) {
-            response.sendRedirect();//TODO:login页面跳转路径
+            response.sendRedirect("/login");//TODO:login页面跳转路径
             return null;
         }
         return userService.getUserItemForSale(user.getUid());

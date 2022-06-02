@@ -1,6 +1,7 @@
 package com.example.xianyu.service;
 
 import com.example.xianyu.entity.Item;
+import com.example.xianyu.entity.VO.ItemVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface ItemService {
     List<Item> defaultLoadItem();
     boolean deleteItem(Integer iid);
     Item getItemByIid(Integer iid);
+    List<ItemVO> getItemByTid(String type);
 }

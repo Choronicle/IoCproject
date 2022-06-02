@@ -3,10 +3,12 @@ package com.example.xianyu.service.impl;
 import com.example.xianyu.entity.Item;
 import com.example.xianyu.mapper.CartMapper;
 import com.example.xianyu.service.CartService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+@Service
 public class CartServiceImpl implements CartService {
     @Resource
     CartMapper cartMapper;
