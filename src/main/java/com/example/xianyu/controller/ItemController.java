@@ -78,7 +78,7 @@ public class ItemController {
     }
 
     @PostMapping("/search")
-    public List<Item> getItemBySearching(@Param("input") String input){
+    public List<ItemVO> getItemBySearching(@Param("input") String input){
         return itemService.getItemBySearching(input);
     }
 }

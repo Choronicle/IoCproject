@@ -1,14 +1,13 @@
-package com.example.xianyu.entity;
+package com.example.xianyu.entity.VO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.ibatis.annotations.Options;
 
 import java.math.BigInteger;
 
 @Data
-public class User {
-    private Integer uid;
+@AllArgsConstructor
+public class LoginVO {
     private String username;
     private String password;
     private BigInteger phone;

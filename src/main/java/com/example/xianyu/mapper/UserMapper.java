@@ -1,6 +1,7 @@
 package com.example.xianyu.mapper;
 
 import com.example.xianyu.entity.User;
+import com.example.xianyu.entity.VO.UserVO;
 import org.apache.ibatis.annotations.*;
 
 

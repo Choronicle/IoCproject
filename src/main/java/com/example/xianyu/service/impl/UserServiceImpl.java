@@ -1,5 +1,6 @@
 package com.example.xianyu.service.impl;
 
+import com.example.xianyu.entity.VO.LoginVO;
 import com.example.xianyu.entity.VO.UserVO;
 import com.example.xianyu.entity.Item;
 import com.example.xianyu.entity.Sale;
@@ -27,20 +28,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean register(User user) {
+        User tmp = userMapper.getUserByUsername(user.getUsername());
+        if(tmp != null) return false;
         return userMapper.registerUser(user) > 0;
     }
-
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = userMapper.getUserByUsername(username);
-//        if(user == null)
-//            throw new UsernameNotFoundException("登录失败，用户名或密码错误！");
-//        return org.springframework.security.core.userdetails.User
-//                .withUsername(user.getUsername())
-//                .password(user.getPassword())
-//                .roles("user")
-//                .build();
-//    }
 
 
     @Override

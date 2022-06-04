@@ -1,5 +1,6 @@
 package com.example.xianyu.controller;
 
+import com.example.xianyu.entity.VO.LoginVO;
 import com.example.xianyu.entity.VO.UserVO;
 import com.example.xianyu.entity.Item;
 import com.example.xianyu.entity.Sale;
@@ -24,23 +25,30 @@ public class UserController {
 
     //登录成功返回用户信息，登录失败则返回空
     @PostMapping("/login")
-    public User login(UserVO userVO, HttpServletRequest request) {
+    public boolean login(@RequestBody UserVO userVO, HttpServletRequest request) {
         String username = userVO.getUserInput();
         String password = userVO.getPassInput();
         if (username == null || password == null) {
-            return null;
+            return false;
         }
         User user =  userService.login(userVO);
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
-        return user;
+        return user != null;
     }
 
     //注册成功返回true
     @PostMapping("/signUp")
-    public boolean signUp(User user){
+    public boolean signUp(@RequestBody LoginVO loginVO){
+        User user = new User();
+        user.setUsername(loginVO.getUsername());
+        user.setPassword(loginVO.getPassword());
+        user.setPhone(loginVO.getPhone());
+        user.setEmail(loginVO.getEmail());
+        user.setAddress(loginVO.getAddress());
         return userService.register(user);
     }
+
 
     @GetMapping("/bought")
     public List<Sale> buyerSales(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -55,7 +63,7 @@ public class UserController {
 
     @GetMapping("/sold")
     public List<Sale> salerSales(HttpServletRequest request, HttpServletResponse response) throws IOException{
-    HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if(user == null) {
             response.sendRedirect("/login");//TODO:login页面跳转路径

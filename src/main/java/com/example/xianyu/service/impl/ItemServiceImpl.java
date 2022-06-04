@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -48,18 +49,23 @@ public class ItemServiceImpl implements ItemService {
         List<Item> itemList = itemMapper.getItemByTid(tid);
         List<ItemVO> itemVOList = new LinkedList<>();
         for (Item i:itemList) {
-            itemVOList.add(new ItemVO(i.getName(), i.getPrice().toString()));
+            itemVOList.add(new ItemVO(i.getIid(), i.getName(), i.getPrice().toString(),i.getImage_addr()));
         }
         return itemVOList;
     }
 
     @Override
-    public List<Item> getItemBySearching(String input) {
+    public List<ItemVO> getItemBySearching(String input) {
         if(input == null){
             return null;
         }
         input = "%" + input + "%";
-        return itemMapper.getItemBySearching(input);
+        List<Item> list = itemMapper.getItemBySearching(input);
+        List<ItemVO> itemVOList = new ArrayList<>();
+        for (Item i: list) {
+            itemVOList.add(new ItemVO(i.getIid(),i.getName(),Double.toString(i.getPrice()),i.getImage_addr()));
+        }
+        return itemVOList;
     }
 }
 
