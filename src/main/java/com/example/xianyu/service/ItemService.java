@@ -13,4 +13,5 @@ public interface ItemService {
     boolean deleteItem(Integer iid);
     Item getItemByIid(Integer iid);
     List<ItemVO> getItemByTid(String type);
+    List<Item> getItemBySearching(String input);
 }

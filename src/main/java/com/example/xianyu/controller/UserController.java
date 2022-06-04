@@ -24,10 +24,10 @@ public class UserController {
 
     //登录成功返回用户信息，登录失败则返回空
     @PostMapping("/login")
-    public User login(@RequestBody UserVO userVO, HttpServletRequest request) {
-        String username = userVO.getUser_input();
-        String password = userVO.getPass_input();
-        if (username.isBlank() || password.isBlank()) {
+    public User login(UserVO userVO, HttpServletRequest request) {
+        String username = userVO.getUserInput();
+        String password = userVO.getPassInput();
+        if (username == null || password == null) {
             return null;
         }
         User user =  userService.login(userVO);
@@ -38,7 +38,7 @@ public class UserController {
 
     //注册成功返回true
     @PostMapping("/signUp")
-    public boolean signUp(@RequestBody User user){
+    public boolean signUp(User user){
         return userService.register(user);
     }
 
@@ -76,3 +76,13 @@ public class UserController {
     }
 
 }
+//Resolved [org.springframework.web.HttpMediaTypeNotSupportedException:
+//        Content type 'multipart/form-data;
+//                        boundary=--------------------------338353724026830213271466;
+//                        charset=UTF-8'
+//        not supported]
+//
+//        Resolved [org.springframework.http.converter.HttpMessageNotReadableException:
+//                Required request body is missing:
+//                    public com.example.xianyu.entity.User
+//                            com.example.xianyu.controller.UserController.login(com.example.xianyu.entity.VO.UserVO,javax.servlet.http.HttpServletRequest)]

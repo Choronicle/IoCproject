@@ -1,9 +1,11 @@
 package com.example.xianyu.entity.VO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class UserVO {
-    String user_input;
-    String pass_input;
+    String userInput;
+    String passInput;
 }

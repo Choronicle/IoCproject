@@ -14,11 +14,4 @@ public class Item {
     private String image_addr;
     private String update_time;
     private Integer tid;
-
-    public Item(UploadItemVO vo){
-        this.name = vo.getGoodName();
-        this.image_addr = vo.getImgURL();
-        this.description = vo.getDesc();
-        this.price = Double.valueOf(vo.getGoodPrice());
-    }
 }

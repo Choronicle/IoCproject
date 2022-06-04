@@ -26,4 +26,7 @@ public interface ItemMapper {
 
     @Select("select * from item where item_status = 'forSale'")
     List<Item> getAllAvailableItem();
+
+    @Select("select * from item where name like #{input} union select a.* from item a inner join item_type b on a.type_id =  b.tid where b.type_name like #{input}")
+    List<Item> getItemBySearching(@Param("input") String input);
 }

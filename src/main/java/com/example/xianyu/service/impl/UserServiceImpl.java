@@ -42,11 +42,11 @@ public class UserServiceImpl implements UserService {
 //                .build();
 //    }
 
+
     @Override
     public User login(UserVO userVO){
-        User user = userMapper.getUserByUsername(userVO.getUser_input());
-        if(!user.getPassword().equals(userVO.getPass_input())){
-            user = null;
+        User user = userMapper.getUserByUsername(userVO.getUserInput());
+        if(!user.getPassword().equals(userVO.getPassInput())){
             return null;
         }
         return user;

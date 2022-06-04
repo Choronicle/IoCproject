@@ -5,6 +5,7 @@ import com.example.xianyu.entity.VO.ItemVO;
 import com.example.xianyu.mapper.ItemMapper;
 import com.example.xianyu.service.ItemService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.LinkedList;
@@ -51,4 +52,14 @@ public class ItemServiceImpl implements ItemService {
         }
         return itemVOList;
     }
+
+    @Override
+    public List<Item> getItemBySearching(String input) {
+        if(input == null){
+            return null;
+        }
+        input = "%" + input + "%";
+        return itemMapper.getItemBySearching(input);
+    }
 }
+

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-//@CrossOrigin
+@CrossOrigin
 @RequestMapping("/item")
 public class ItemController {
 
@@ -26,14 +26,18 @@ public class ItemController {
 
     //成功添加则返回true
     @PostMapping("/upload")
-    public boolean upload(@RequestBody UploadItemVO vo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public boolean upload(UploadItemVO vo, HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if(user == null) {
             response.sendRedirect("/login");//TODO:login页面跳转路径
             return false;
         }
-        Item item = new Item(vo);
+        Item item = new Item();
+        item.setName(vo.getGoodName());
+        item.setImage_addr(vo.getImgURL());
+        item.setDescription(vo.getDesc());
+        item.setPrice(Double.valueOf(vo.getGoodPrice()));
         item.setSaler_id(user.getUid());
         return itemService.addItem(item);
     }
@@ -71,5 +75,10 @@ public class ItemController {
             return null;
         }
         return itemService.getItemByIid(iid);
+    }
+
+    @PostMapping("/search")
+    public List<Item> getItemBySearching(@Param("input") String input){
+        return itemService.getItemBySearching(input);
     }
 }
