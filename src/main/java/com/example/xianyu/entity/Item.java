@@ -13,5 +13,5 @@ public class Item {
     private String item_status;
     private String image_addr;
     private String update_time;
-    private Integer tid;
+    private Integer type_id;
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ItemVO {
-    Integer id;
+    Integer iid;
     String title;
     String price;
     String imgURL;

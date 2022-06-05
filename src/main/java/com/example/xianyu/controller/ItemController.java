@@ -66,18 +66,12 @@ public class ItemController {
     }
 
     //根据商品id访问商品
-    @PostMapping("/get")
-    public Item getItem(@RequestParam("iid") Integer iid, HttpServletRequest request,HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("/login");//TODO:login页面跳转路径
-            return null;
-        }
+    @GetMapping("/get")
+    public Item getItem(@RequestParam("iid") Integer iid){
         return itemService.getItemByIid(iid);
     }
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public List<ItemVO> getItemBySearching(@Param("input") String input){
         return itemService.getItemBySearching(input);
     }
