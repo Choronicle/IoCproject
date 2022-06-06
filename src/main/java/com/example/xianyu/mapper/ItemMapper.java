@@ -15,13 +15,16 @@ public interface ItemMapper {
     @Update("update item set item_status = 'offMarket' where iid = #{iid}")
     int falseDeleteItemByIid(@Param("iid") Integer iid);
 
+    @Update("update item set item_status = 'sold' where iid = #{iid}")
+    int setItemSold(@Param("iid") Integer iid);
+
     @Select("select * from item where saler_id = #{saler_id} and item_status = 'forSale'")
     List<Item> getItemBySalerId(@Param("saler_id") Integer saler_id);
 
     @Select("select * from item where iid = #{iid}")
     Item getItemByIid(@Param("iid") Integer iid);
 
-    @Select("select * from item where type_id = #{tid}")
+    @Select("select * from item where type_id = #{tid} and item_status = 'forSale'")
     List<Item> getItemByTid(@Param("tid") Integer tid);
 
     @Select("select * from item where item_status = 'forSale'")

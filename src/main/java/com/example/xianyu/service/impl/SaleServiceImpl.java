@@ -19,7 +19,9 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public boolean buy(Sale sale) {
         if(saleMapper.getSaleByIid(sale.getItem_id()) != null)return false;
-        return saleMapper.addSale(sale) > 0;
+        boolean res = saleMapper.addSale(sale) > 0;
+        if(res)res = itemMapper.setItemSold(sale.getItem_id()) > 0;
+        return res;
     }
 
     @Override
