@@ -2,6 +2,8 @@ package com.example.xianyu.controller;
 
 import com.example.xianyu.entity.Sale;
 import com.example.xianyu.entity.User;
+import com.example.xianyu.entity.VO.GoodVO;
+import com.example.xianyu.entity.VO.SaleVO;
 import com.example.xianyu.service.impl.SaleServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +22,18 @@ public class SaleController {
     SaleServiceImpl saleService;
 
     @PostMapping("/buy")
-    public boolean buy(@RequestBody Sale sale, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("/login");//TODO:login页面跳转路径
-            return false;
+    public boolean buy(@RequestBody SaleVO saleVO){
+        boolean flag = true;
+        for (GoodVO g: saleVO.getGoods()) {
+            Sale sale = new Sale();
+            Integer iid = Integer.valueOf(g.getIid());
+            sale.setItem_id(iid);
+            sale.setSaler_id(saleService.getSalerIdByIid(iid));
+            sale.setBuyer_id(saleVO.getUid());
+            flag = saleService.buy(sale);
+            if(!flag)break;
         }
-        sale.setBuyer_id(user.getUid());
-        return saleService.buy(sale);
+        return flag;
     }
 
 }

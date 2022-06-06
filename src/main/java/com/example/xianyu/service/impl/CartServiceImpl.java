@@ -1,6 +1,8 @@
 package com.example.xianyu.service.impl;
 
+import com.example.xianyu.entity.CartItem;
 import com.example.xianyu.entity.Item;
+import com.example.xianyu.entity.VO.ItemVO;
 import com.example.xianyu.mapper.CartMapper;
 import com.example.xianyu.service.CartService;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,8 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public boolean addCart(Integer user_id, Integer item_id) {
-        if(cartMapper.getCartItemByUserIdAndItemId(user_id, item_id) == null)return cartMapper.addCart(user_id, item_id) > 0;
+    public boolean addCart(CartItem cartItem) {
+        if(cartMapper.getCartItemByUserIdAndItemId(cartItem.getUid(), Integer.valueOf(cartItem.getIid())) == null)return cartMapper.addCart(cartItem.getUid(), Integer.valueOf(cartItem.getIid())) > 0;
         return false;
     }
 
@@ -26,7 +28,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<Integer> loadCart(Integer user_id) {
+    public List<ItemVO> loadCart(Integer user_id) {
         return cartMapper.getCartItemByUserId(user_id);
     }
 }

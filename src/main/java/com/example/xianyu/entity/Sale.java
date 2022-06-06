@@ -8,5 +8,4 @@ public class Sale {
     private Integer buyer_id;
     private Integer saler_id;
     private Integer item_id;
-    private String create_time;
 }

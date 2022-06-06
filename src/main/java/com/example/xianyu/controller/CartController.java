@@ -1,7 +1,9 @@
 package com.example.xianyu.controller;
 
+import com.example.xianyu.entity.CartItem;
 import com.example.xianyu.entity.Item;
 import com.example.xianyu.entity.User;
+import com.example.xianyu.entity.VO.ItemVO;
 import com.example.xianyu.service.impl.CartServiceImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
@@ -21,29 +23,19 @@ public class CartController {
     @Resource
     CartServiceImpl cartService;
 
-    @GetMapping("/")
-    public List<Integer> load(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("/login");//TODO:login页面跳转路径
-            return null;
-        }
-        return cartService.loadCart(user.getUid());
+    @GetMapping("/load")
+    public List<ItemVO> load(@Param("uid") Integer uid){
+        if(uid == null)return null;
+        return cartService.loadCart(uid);
     }
 
-    @PostMapping("/addCart")
-    public boolean addCart(@Param("item_id") Integer item_id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("/login");//TODO:login页面跳转路径
-            return false;
-        }
-        return cartService.addCart(user.getUid(), item_id);
+    @PostMapping("/add")
+    public boolean addCart(@RequestBody CartItem cartItem){
+        if(cartItem == null || cartItem.getIid() == null || cartItem.getUid() == null)return false;
+        return cartService.addCart(cartItem);
     }
 
-    @PostMapping("/deleteCart")
+    @PostMapping("/delete")
     public boolean deleteCart(@Param("item_id") Integer item_id,  HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");

@@ -11,4 +11,5 @@ public class UploadItemVO {
     String shopInfo;
     String goodName;
     String goodPrice;
+    Integer uid;
 }

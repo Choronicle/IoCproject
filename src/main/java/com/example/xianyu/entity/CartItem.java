@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class CartItem {
-    private Integer user_id;
-    private Integer item_id;
+    private String iid;
+    private Integer uid;
 }

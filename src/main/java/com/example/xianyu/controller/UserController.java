@@ -1,11 +1,13 @@
 package com.example.xianyu.controller;
 
+import com.example.xianyu.entity.VO.ItemVO;
 import com.example.xianyu.entity.VO.LoginVO;
 import com.example.xianyu.entity.VO.UserVO;
 import com.example.xianyu.entity.Item;
 import com.example.xianyu.entity.Sale;
 import com.example.xianyu.entity.User;
 import com.example.xianyu.service.impl.UserServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,17 +26,18 @@ public class UserController {
     UserServiceImpl userService;
 
     //登录成功返回用户信息，登录失败则返回空
-    @PostMapping("/login")
-    public boolean login(@RequestBody UserVO userVO, HttpServletRequest request) {
-        String username = userVO.getUserInput();
-        String password = userVO.getPassInput();
+    @GetMapping("/login")
+    public Integer login(@Param("username") String username, @Param("password") String password) {
         if (username == null || password == null) {
-            return false;
+            return 0;
         }
+        UserVO userVO = new UserVO(username,password);
         User user =  userService.login(userVO);
-        HttpSession session = request.getSession();
-        session.setAttribute("user", user);
-        return user != null;
+        if(user == null){
+            return 0;
+        }else{
+            return user.getUid();
+        }
     }
 
     //注册成功返回true
@@ -51,14 +54,8 @@ public class UserController {
 
 
     @GetMapping("/bought")
-    public List<Sale> buyerSales(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("/login");//TODO:login页面跳转路径
-            return null;
-        }
-        return userService.getBuyerSale(user.getUid());
+    public List<ItemVO> buyerSales(@RequestParam(name = "userID") Integer uid){
+        return userService.getBuyerSale(uid);
     }
 
     @GetMapping("/sold")
@@ -73,14 +70,8 @@ public class UserController {
     }
 
     @GetMapping("/forSale")
-    public List<Item> itemForSale(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user == null) {
-            response.sendRedirect("/login");//TODO:login页面跳转路径
-            return null;
-        }
-        return userService.getUserItemForSale(user.getUid());
+    public List<ItemVO> itemForSale(@RequestParam(name = "sellID") Integer uid){
+        return userService.getUserItemForSale(uid);
     }
 
 }

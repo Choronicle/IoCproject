@@ -1,5 +1,6 @@
 package com.example.xianyu.service;
 
+import com.example.xianyu.entity.VO.ItemVO;
 import com.example.xianyu.entity.VO.UserVO;
 import com.example.xianyu.entity.Item;
 import com.example.xianyu.entity.Sale;
@@ -12,7 +13,7 @@ import java.util.List;
 public interface UserService {
     boolean register(User user);
     User login(UserVO userVO);
-    List<Sale> getBuyerSale(Integer uid);
-    List<Item> getUserItemForSale(Integer uid);
+    List<ItemVO> getBuyerSale(Integer uid);
+    List<ItemVO> getUserItemForSale(Integer uid);
     List<Sale> getSalerSale(Integer uid);
 }
