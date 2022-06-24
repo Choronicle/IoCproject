@@ -6,7 +6,10 @@ spring:
     password: wf011204
 server:
   port: 9090
+  tomcat:
+    max-http-form-post-size: 104857600
 
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

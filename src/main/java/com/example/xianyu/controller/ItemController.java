@@ -2,7 +2,7 @@ package com.example.xianyu.controller;
 
 import com.example.xianyu.entity.Item;
 
-import com.example.xianyu.entity.User;
+
 import com.example.xianyu.entity.VO.DeleteVO;
 import com.example.xianyu.entity.VO.ItemVO;
 import com.example.xianyu.entity.VO.UploadItemVO;
